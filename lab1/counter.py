@@ -2,9 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from sys import stdin
-from os import linesep
 
-words = ' '.join([l.strip() for l in stdin]).split(' ')
+words = sorted(' '.join([l.strip() for l in stdin]).split(' '))
 
-print linesep.join(map(str, sorted(map(words.count, set(words)), reverse=True)))
+counts = {}
+
+for key in set(words):
+    counts[key] = 0
+for w in words:
+    counts[w] += 1
+
+print ' '.join(map(str, sorted(counts.values(), reverse=True)))
 
