@@ -12,5 +12,5 @@ for key in set(words):
 for w in words:
     counts[w] += 1
 
-print ' '.join(map(str, sorted(counts.values(), reverse=True)))
+print ' '.join(map(str, sorted(list(set(counts.values())), reverse=True)))
 
