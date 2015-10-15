@@ -42,9 +42,10 @@ tf_idfs = []
 for i, tf in enumerate(tfs):
     tf_idfs.append({})
     for word in tf:
-        tf_idfs[i][word] = float(tf[word] * idf[word]) / len(tf)
+        tf_idfs[i][word] = tf[word] * idf[word] / len(tf)
 
 
 print linesep.join('%s,%s,%f'%(names[i], word, tf_idf[word])
-                    for i, tf_idf in enumerate(tf_idfs) for word in tf_idf)
+                    for i, tf_idf in enumerate(tf_idfs)
+                    for word in tf_idf)
 
