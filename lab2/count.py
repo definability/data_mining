@@ -10,5 +10,5 @@ found = []
 for i, w in enumerate(words):
     if w not in found:
         found.append(w)
-    print '%d,%d'%(i, len(found))
+    print '%d,%d'%(i+1, len(found))
 
