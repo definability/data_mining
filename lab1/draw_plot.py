@@ -14,7 +14,7 @@ print linesep.join('%d'%f for f in frequencies)
 pyplot.plot(frequencies, 'ro')
 
 ax = pyplot.subplot()
-#ax.set_yscale('log')
+ax.set_yscale('log')
 ax.set_xscale('log')
 
 pyplot.show()
