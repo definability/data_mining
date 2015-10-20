@@ -53,7 +53,7 @@ if __name__ == '__main__':
         for word in tf:
             tf_idfs[i][word] = tf[word] * idf[word] / len(tf)
 
-    result = [(names[i], word, tf_idf[word]) for i, tf_idf in enumerate(tf_idfs) for word in tf_idf]
-    result = sorted(result, key=lambda x: x[2], reverse=True)
-    print linesep.join('%s,%s,%f'%(r) for r in result)
+    result = [(names[i], word, tf_idf[word], idf[word]) for i, tf_idf in enumerate(tf_idfs) for word in tf_idf]
+    result = sorted(result, key=lambda x: x[3], reverse=True)
+    print linesep.join('%s,%s,%f,%f'%(r) for r in result)
 
