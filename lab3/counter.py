@@ -4,6 +4,7 @@
 from sys import stdin, argv
 from os import linesep
 from math import log
+from stoplist import stop_list
 
 
 def get_count(words):
@@ -16,11 +17,12 @@ def get_count(words):
 
 def group_n_grams(words, n):
     if n < 2:
-        return words
-    return [' '.join(w for w in words[i:i+n]) for i in range(len(words)-n)]
+        return [w for w in words if w not in stop_list]
+    return [' '.join(w for w in words[i:i+n]) for i in range(len(words)-n) if words[i] not in stop_list and words[i+n-1] not in stop_list]
 
 if __name__ == '__main__':
     n_grams_length = 1
+
     if len(argv) > 1:
         n_grams_length = int(argv[1])
 
@@ -53,7 +55,7 @@ if __name__ == '__main__':
         for word in tf:
             tf_idfs[i][word] = tf[word] * idf[word] / len(tf)
 
-    result = [(names[i], word, tf_idf[word], idf[word]) for i, tf_idf in enumerate(tf_idfs) for word in tf_idf]
-    result = sorted(result, key=lambda x: x[3], reverse=True)
-    print linesep.join('%s,%s,%f,%f'%(r) for r in result)
+    result = [(names[i], word, tf_idf[word]) for i, tf_idf in enumerate(tf_idfs) for word in tf_idf]
+    result = sorted(result, key=lambda x: x[2], reverse=True)
+    print linesep.join('%s,%s,%f'%(r) for r in result)
 
