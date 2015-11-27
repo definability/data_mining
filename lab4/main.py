@@ -1,6 +1,7 @@
 from graph_tool.all import *
-from words import words
-from valuable import words as dictionary
+from words import data as words
+from bigrams import data as bigrams
+from trigrams import data as trigrams
 from math import log10
 
 
@@ -16,40 +17,53 @@ def get_vertex(g, name, word, vertices):
     return a
 
 
-def build_graph(treshold=.1, last_word=-1):
+def build_graph(g, entries, containers, weight, word, color, vertices,
+                treshold=.1, last_word=-1,
+                entry_color='red', container_color='red'):
+    def add_to_container(entry, container):
+        a = get_vertex(g, entry, word, vertices)
+        color[a] = entry_color
+        b = get_vertex(g, container, word, vertices)
+        color[b] = container_color
+        e = g.add_edge(a, b)
+        # Set weight for new edge (tf-idf)
+        # Just empirical formula, which gives edges with 1 <= width < 30
+        weight[e] = log10(containers[container])+4
+    for entry in entries:
+        if entries[entry] < treshold:
+            continue
+        for container in containers:
+            if container.find(entry) < 0:
+                continue
+            add_to_container(entry, container)
+    return
+
+
+def init_graph():
     # Create directed graph
     g = Graph(directed=True)
-
     # Create 'weight' property for edge: will contain tf-idf
     weight = g.new_edge_property('float')
     # Create 'word' property for vertex: will contain string with current word
     word = g.new_vertex_property('string')
-    # Dictionary with existent vertices (cache)
-    vertices = {}
-
-    for w in words[:last_word]:
-        # Check, whether at least one word is in dictionary of valuable words
-        if w[0] not in dictionary and w[1] not in dictionary:
-            continue
-        # Check, whether at least one word is valuable
-        if dictionary[w[0]] < treshold and dictionary[w[1]] < treshold:
-            continue
-        a = get_vertex(g, w[0], word, vertices)
-        b = get_vertex(g, w[1], word, vertices)
-        e = g.add_edge(a, b)
-        # Set weight for new edge (tf-idf)
-        # Just empirical formula, which gives edges with 1 <= width < 30
-        weight[e] = log10(w[2])*10 + 23
-
-    return g, weight, word
+    color = g.new_vertex_property('string')
+    return g, weight, word, color, {}
 
 
 if __name__ == '__main__':
-    g, weight, word = build_graph()
+    g, weight, word, color, vertices = init_graph()
+    # Dictionary with existent vertices (cache)
+    build_graph(g, entries=words, containers=bigrams, color=color,
+                weight=weight, word=word, vertices=vertices,
+                entry_color='red', container_color='blue')
+    build_graph(g, entries=bigrams, containers=trigrams, color=color,
+                weight=weight, word=word, vertices=vertices,
+                entry_color='blue', container_color='purple')
     # Draw the graph;
     # Weight is responsible for edges widths
     # Word contains labels for vertices
     graph_draw(g, vertex_font_size=12, edge_pen_width=weight, vertex_text=word,
+               vertex_fill_color=color,
                output='words.png', output_size=(2000, 2000))
     # Alternative
     # graph_draw(g, edge_pen_width=weight, vertex_text=word, node_first=True,
