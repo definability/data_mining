@@ -260,7 +260,7 @@ $n_k$ --- количество повторений $k$ слова ($n$-грам
                  numbers=left]{../lab3/counter.py}
 
 \section{Результат}
-На рисунке \ref{fig:tfidf:table} изображены первые $40$ строк таблицы
+На рисунке \ref{fig:tfidf:words:table} изображены первые $40$ строк таблицы
 со значениями $TF-IDF$ для слов из $144$ документов автора
 Льва Николаевича Толстого, $27$ документов Фёдора Михайловича Достоевского
 и $31$ документа Александра Сергеевича Пушкина, отсортированных по значению
@@ -273,11 +273,28 @@ $TF-IDF$ в порядке убывания.
 Подсчёт $TF-IDF$ происходит за $6.5$ секунд,
 на выходе получается $.csv$ файл объёмом $39$MB.
 
+%На рисунке \ref{fig:tfidf:triad:table} изображены первые $40$ строк таблицы
+%с триадами.
+
 \begin{figure}[h]
   \centering
   \includegraphics{../lab3/table}
-  \caption{Результат}
-  \label{fig:tfidf:table}
+  \caption{Результат для слов}
+  \label{fig:tfidf:words:table}
 \end{figure}
+
+%\begin{figure}[h]
+%  \centering
+%  \includegraphics{../lab3/table}
+%  \caption{Результат для триад}
+%  \label{fig:tfidf:triad:table}
+%\end{figure}
+
+%\csvautotabular{lab.csv}
+\csvreader[tabular=|l|l|l|c|,
+  table head=\hline № & Книга & Слово & $TF-IDF$ \\\hline,
+  late after line=\\\hline]
+  {lab.csv}{book=\book,word=\word,tfidf=\tfidf}
+  {\thecsvrow & \book & \word & \tfidf}
 
 \end{document}
