@@ -4,6 +4,7 @@ from bigrams import data as bigrams
 from trigrams import data as trigrams
 from math import log10, log
 from sys import argv
+from os import linesep
 
 
 def clear_entries(entries, containers, treshold=0):
@@ -61,6 +62,23 @@ def build_graph(g, entries, containers,
     return
 
 
+def get_matrix(entries, containers):
+    result = {}
+    for container in containers:
+        result[container] = dict((entry, entries[entry] if entry in container else 0)
+                                for entry in entries)
+    return result
+
+
+def draw_matrix(matrix, entries):
+    keys = entries.keys()
+    result = ''
+    result += ','.join(['container'] + keys) + linesep
+    for container, line in matrix.items():
+        result += ','.join([container] + [str(line[key]) for key in keys]) + linesep
+    return result
+
+
 def init_graph():
     # Create directed graph
     g = Graph(directed=True)
@@ -92,6 +110,8 @@ if __name__ == '__main__':
     # Dictionary with existent vertices (cache)
     clear_entries(words, bigrams)
     clear_entries(bigrams, trigrams)
+    print draw_matrix(get_matrix(words, bigrams), words)
+    print draw_matrix(get_matrix(bigrams, trigrams), bigrams)
     build_graph(g, entries=words, containers=bigrams,
                 color=color, weight=weight, word=word,
                 vertices=vertices,
