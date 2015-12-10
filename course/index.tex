@@ -277,7 +277,7 @@ $TF-IDF$ в порядке убывания.
 с биграммами, а на \ref{fig:tfidf:triads:table} изображены
 первые $18$ строк таблицы с триадами.
 
-\begin{figure}[h]
+\begin{table}[h]
   \centering
   \csvreader[tabular=|l|l|l|c|,
   table head=\hline № & Книга & Слово & $TF-IDF$ \\\hline,
@@ -287,9 +287,9 @@ $TF-IDF$ в порядке убывания.
 
   \caption{Результат для слов}
   \label{fig:tfidf:words:table}
-\end{figure}
+\end{table}
 
-\begin{figure}[h]
+\begin{table}[h]
   \centering
   \csvreader[tabular=|l|l|l|c|,
   table head=\hline № & Книга & Биграмма & $TF-IDF$ \\\hline,
@@ -299,9 +299,9 @@ $TF-IDF$ в порядке убывания.
 
   \caption{Результат для биграмм}
   \label{fig:tfidf:bigrams:table}
-\end{figure}
+\end{table}
 
-\begin{figure}[h]
+\begin{table}[h]
   \centering
   \csvreader[tabular=|l|l|l|c|,
   table head=\hline № & Книга & Триада & $TF-IDF$ \\\hline,
@@ -311,7 +311,7 @@ $TF-IDF$ в порядке убывания.
 
   \caption{Результат для триад}
   \label{fig:tfidf:triads:table}
-\end{figure}
+\end{table}
 
 \chapter{Графическое представление сети слов}
 
@@ -323,6 +323,46 @@ $TF-IDF$ в порядке убывания.
 \lstset{inputencoding=utf8, extendedchars=\true}
 \lstinputlisting[language=python,caption=draw.py,
                  numbers=left]{../lab4/main.py}
+
+\begin{sidewaystable}
+  \centering
+  \resizebox{\columnwidth}{!}{
+  \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+    \hline
+    & анна & прощай & неизбежна & лаура & гуан & дон & несчастный & дона & бесподобно & страдальца & опасный & прощайте & нарочно \\ \hline
+
+    несчастный дон & 0 & 0 & 0 & 0 & 0 & 0.471297 & 0.002683 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+    опасный дон & 0 & 0 & 0 & 0 & 0 & 0.471297 & 0 & 0 & 0 & 0 & 0.006097 & 0 & 0 \\ \hline
+    дон гуан & 0 & 0 & 0 & 0 & 0.625634 & 0.471297 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+    бесподобно лаура & 0 & 0 & 0 & 0.192471 & 0 & 0 & 0 & 0 & 0.007633 & 0 & 0 & 0 & 0 \\ \hline
+    дона анна & 0.143801 & 0 & 0 & 0 & 0 & 0.471297 & 0 & 0.222531 & 0 & 0 & 0 & 0 & 0 \\ \hline
+    неизбежна дон & 0 & 0 & 0.004184 & 0 & 0 & 0.471297 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+    страдальца дона & 0 & 0 & 0 & 0 & 0 & 0.471297 & 0 & 0.222531 & 0 & 0.003048 & 0 & 0 & 0 \\ \hline
+    нарочно дон & 0 & 0 & 0 & 0 & 0 & 0.471297 & 0 & 0 & 0 & 0 & 0 & 0 & 0.001116 \\ \hline
+    лаура прощайте & 0 & 0.003127 & 0 & 0.192471 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.003458 & 0 \\ \hline
+  \end{tabular}
+}
+  \caption{Матрица весов графа слов и биграмм}
+  \label{fig:matrix:bigrams:table}
+\end{sidewaystable}
+
+\begin{sidewaystable}
+  \centering
+  \resizebox{\columnwidth}{!}{
+  \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+    \hline
+      & неизбежна дон & лаура прощайте & опасный дон & дона анна & несчастный дон & нарочно дон & страдальца дона & дон гуан & бесподобно лаура \\ \hline
+      страдальца дона анна & 0 & 0 & 0 & 0.461864 & 0 & 0 & 0.006327 & 0 & 0 \\ \hline
+      несчастный дон гуан & 0 & 0 & 0 & 0 & 0.006327 & 0 & 0 & 0.803516 & 0 \\ \hline
+      бесподобно лаура прощайте & 0 & 0.006327 & 0 & 0 & 0 & 0 & 0 & 0 & 0.006327 \\ \hline
+      нарочно дон гуан & 0 & 0 & 0 & 0 & 0 & 0.006327 & 0 & 0.803516 & 0 \\ \hline
+      неизбежна дон гуан & 0.006327 & 0 & 0 & 0 & 0 & 0 & 0 & 0.803516 & 0 \\ \hline
+      опасный дон гуан & 0 & 0 & 0.006327 & 0 & 0 & 0 & 0 & 0.803516 & 0 \\ \hline
+  \end{tabular}
+}
+  \caption{Матрица весов графа биграмм и триад}
+  \label{fig:matrix:triads:table}
+\end{sidewaystable}
 
 \end{document}
 
