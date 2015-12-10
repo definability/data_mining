@@ -21,7 +21,7 @@
 \section{Закон Ципфа}
 Отношение ранга слова $R$, то есть его номер в списке слов,
 отсортированных по частоте в порядке убывания, к частоте слова $f$,
-является постоянным
+является постоянным \cite{JeanBaptiste}
 \begin{equation*}
   Z = R \cdot f,
 \end{equation*}
@@ -103,6 +103,7 @@
 \section{Закон Хипса}
 Объём словаря уникальных слов $\nu\left( n \right)$
 для текста длиной $n$ связан с длиной текста следующим соотношением
+\cite{Internetika}
 \begin{equation*}
   \nu\left( n \right) = \alpha \cdot n^\beta,
 \end{equation*}
@@ -171,6 +172,7 @@
 по следующим формулам, где
 $D$ --- множество документов,
 $n_k$ --- количество повторений $k$ слова ($n$-граммы) в текущем документе
+\cite{Jones}
 \begin{equation*}
   \begin{split}
     TF_i  &= \frac{n_i}{\sum_{k} n_k}, \\
@@ -211,7 +213,7 @@ $n_k$ --- количество повторений $k$ слова ($n$-грам
 
 Список стоп-слов можно найти в интернете.
 Например, в разделе 12.9.4 Full-Text Stopwords документации к MySQL 5.5
-находится список англоязычных шумовых слов.
+\cite{Oracle} находится список англоязычных шумовых слов.
 
 Для увеличения скорости и уменьшения объёма обрабатываемых данных
 \begin{enumerate}
@@ -320,6 +322,10 @@ $TF-IDF$ в порядке убывания.
 Привести его матрицу весов.
 
 \section{Прорисовка графа}
+
+Для визуализации графа была использована библиотека $graph-tool$.
+Прорисовка выполнялась с помощью иерархического разделения блоков \cite{Graph}.
+
 \lstset{inputencoding=utf8, extendedchars=\true}
 \lstinputlisting[language=python,caption=draw.py,
                  numbers=left]{../lab4/main.py}
@@ -364,5 +370,11 @@ $TF-IDF$ в порядке убывания.
   \label{fig:matrix:triads:table}
 \end{sidewaystable}
 
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Список литературы}
+\renewcommand\bibname{Список литературы}
+\bibliography{../common/bibliography.bib}
 \end{document}
 
